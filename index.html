@@ -1,0 +1,120 @@
+
+
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>DimiClock</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <style>
+            @font-face {
+                font-family: 'font';
+                src: url('css/typostyle.otf') format('opentype');
+            }
+            body {
+                background-image: url('img/bono.jpeg');
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                font-family: font;
+            }
+
+        </style>
+        <script id="cl0ck">
+
+
+            function printClock() {
+
+                var clock = document.getElementById("clock");            // 출력할 장소 선택
+                var currentDate = new Date();                                     // 현재시간
+                var calendar = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() // 현재 날짜
+                var amPm = 'AM'; // 초기값 AM
+                var currentHours = addZeros(currentDate.getHours(), 2);
+                var currentMinute = addZeros(currentDate.getMinutes(), 2);
+                var currentSeconds = addZeros(currentDate.getSeconds(), 2);
+
+                var y = currentDate.getFullYear();
+                var m = currentDate.getMonth()+1;
+                var d = currentDate.getDate();
+                var h = parseInt(y + y / 4 - y / 100 + y / 400 + (13 * m + 8) / 5 + d) % 7;
+                var Xday;
+
+                var leftHour = addZeros(24 * (6-h) + 9,2);
+                var leftMin= addZeros(60 - currentMinute - 1, 2);
+                var leftSec = addZeros(60 - currentSeconds, 2);
+
+                var friMon = [8,9,9];
+                var friDay = [25,22,29];
+
+
+
+                for(var i=0;i< friDay.length;i++)  {                //금요귀가 주 (오후 5시 기준)
+                    if (friMon[i] === m && friDay[i] === d+(5-h) ) {
+                        leftHour-=16;
+
+
+                    }
+                }
+                if(leftSec===0) leftMin-=1;
+                if(leftMin===0) leftHour-=1;
+
+                if(currentHours >= 12){ // 시간이 12보다 클 때 PM으로 세팅, 12를 빼줌
+                    amPm = 'PM';
+                    //currentHours = addZeros(currentHours - 12,2);
+                }
+                switch(h){
+                    case 0 : Xday = 'Sun'; break;
+                    case 1 : Xday = 'Mon'; break;
+                    case 2 : Xday = 'Tue'; break;
+                    case 3 : Xday = 'Wed'; break;
+                    case 4 : Xday = 'Thu'; break;
+                    case 5 : Xday = 'Fri'; break;
+                    case 6 : Xday = 'Sat'; break;
+                }
+                if(leftSec===0) leftMin-=1;
+                if(leftMin===0) leftHour-=1;
+
+
+                if(currentSeconds >= 50){// 50초 이상일 때 색을 변환해 준다.
+                    currentSeconds = '<span style="color:#de1951;">'+currentSeconds+'</span>'
+                    leftSec = '<span style="color:#de1951;">'+leftSec+'</span>'
+                }
+
+                clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds +" <span style='font-size:50px;'>"+ amPm+"</span></br>" + calendar + " " +  Xday + "</br>"  + leftHour+ ":" + leftMin +":"+leftSec + " <span style='font-size:50px;'>"+ "Go"+"</span>" + "</br>"; //날짜를 출력해 줌
+
+                setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
+            }
+
+
+            function addZeros(num, digit) { // 자릿수 맞춰주기
+                var zero = '';
+                num = num.toString();
+                if (num.length < digit) {
+                    for (var i = 0; i < digit - num.length; i++) {
+                        zero += '0';
+                    }
+                }
+                return zero + num;
+            }
+
+        </script>
+
+
+    </head>
+    <body onload="printClock()">
+        <div onload="printClock()"; style="width:600px; height:250px; line-height:250px; color:#FFFFFF; font-size:100px; text-align:center;" id="clock">
+        </div>
+    <!--//2020.11.19-->
+    <!--font src: http://www.1001fonts.com/typo-style-font.html-->
+    </body>
+</html>
