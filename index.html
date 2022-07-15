@@ -1,7 +1,7 @@
 
 
 <!doctype html>
-<html class="no-js" lang="">
+<html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -9,19 +9,14 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+       
         <style>
             @font-face {
                 font-family: 'font';
                 src: url('css/typostyle.otf') format('opentype');
             }
             html {
-                background-image: url('img/bono.jpeg');
+                background-color: black;
                 background-attachment:fixed
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
@@ -109,8 +104,9 @@
                     + calendar + " " +  low(Xday)  + "</br>"
                     + leftHour+ ":" + leftMin +":"+leftSec + low(" Go") + "</br>"
                     + low("Bob") + " " + araKor + "</br>"
-                    + low("Test ") +  dDay(2017,10,18) + "</br>"
-                    + low("KAIST ") + dDay(2019,11,14) + "</br>"
+                    + low("Test ") +  dDay(2018,12,11) + "</br>"
+                    + low("College ") + dDay(2019,11,14) + "</br>"
+
 
 
                 setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
@@ -118,8 +114,8 @@
 
 
             function checkFri(m,d,h){
-                var friMon = [8,9,9];
-                var friDay = [25,22,29];
+                var friMon = [11,11,12];
+                var friDay = [9,22,14];
 
                 for(var i=0;i< friDay.length;i++) {                //금요귀가 주 (오후 5시 기준)
                     if (friMon[i] === m && friDay[i] === d + (5 - h)) {
@@ -135,7 +131,7 @@
                 var gap = then.getTime() - now.getTime();
                 gap = Math.floor(gap / (1000 * 60 * 60 * 24));
 
-                return gap;
+                return gap+1;
 
             }
 
@@ -155,7 +151,6 @@
             }
 
         </script>
-
 
     </head>
     <body onload ="printClock();">
